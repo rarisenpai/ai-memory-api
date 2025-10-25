@@ -1,0 +1,3 @@
+# nixpacks.toml
+[start]
+cmd = "fastapi run api/main.py --port 3000"
