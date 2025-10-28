@@ -44,11 +44,11 @@ def setup_support_bot(customer_id: str):
         label="policies",
         description="Company policies and procedures relevant to this customer. Read-only reference for the support agent.",
         value="""Premium Support Policies:
-    - Response time: 4 hours maximum
-    - Refund policy: Full refund within 30 days, prorated after
-    - Escalation: Technical issues go to engineering team
-    - Priority: Premium customers get priority queue
-    - Available 24/7 via chat, email, phone""",
+            - Response time: 4 hours maximum
+            - Refund policy: Full refund within 30 days, prorated after
+            - Escalation: Technical issues go to engineering team
+            - Priority: Premium customers get priority queue
+            - Available 24/7 via chat, email, phone""",
             char_limit=10000,
         reset=True,
     )
@@ -69,17 +69,17 @@ def handle_support_request(memory: Memory, customer_message: str) -> str:
     # Build comprehensive system prompt
     system_prompt = f"""You are a helpful customer support agent. Use the customer information below to provide personalized, policy-compliant support.
 
-{customer_profile}
+    {customer_profile}
 
-{support_history}
+    {support_history}
 
-{policies}
+    {policies}
 
-Important:
-- Be empathetic and professional
-- Reference past interactions when relevant
-- Follow company policies strictly
-- Update support history as you resolve issues"""
+    Important:
+    - Be empathetic and professional
+    - Reference past interactions when relevant
+    - Follow company policies strictly
+    - Update support history as you resolve issues"""
 
     messages = [
         {"role": "system", "content": system_prompt},

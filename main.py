@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import memory_router
-from .models import HealthResponse
+from api.routes import memory_router
+from api.models import HealthResponse
 import os
 
 app = FastAPI(
