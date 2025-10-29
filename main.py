@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.routes import memory_router
 from api.models import HealthResponse
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(
     title="Memory Layer API",
@@ -39,5 +42,5 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.getenv("PORT", 3000))
+    port = int(os.getenv("PORT"))
     uvicorn.run(app, host="0.0.0.0", port=port)
