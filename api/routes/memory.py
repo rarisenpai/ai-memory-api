@@ -39,7 +39,7 @@ router = APIRouter(prefix="/memory", tags=["memory"])
 memory_service = MemoryService(
     api_key=os.getenv("LETTA_API_KEY"),
     base_url=os.getenv("LETTA_BASE_URL"),
-    model=os.getenv("LETTA_MODEL", "openai/gpt-4.1"),
+    model=os.getenv("LETTA_MODEL", "openai/gpt-4.1-mini"),
     embedding=os.getenv("LETTA_EMBEDDING", "openai/text-embedding-3-small")
 )
 

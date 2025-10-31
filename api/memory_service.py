@@ -23,7 +23,7 @@ class MemoryService:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         subject_id: Optional[str] = None,
-        model: str = "openai/gpt-4.1",
+        model: str = "openai/gpt-4.1-mini",
         embedding: str = "openai/text-embedding-3-small"
     ):
         """
@@ -33,7 +33,7 @@ class MemoryService:
             api_key: Letta API key (or from LETTA_API_KEY env var)
             base_url: Letta server URL (or from LETTA_BASE_URL env var)
             subject_id: Optional subject binding for single-user mode
-            model: LLM model to use (default: openai/gpt-4.1)
+            model: LLM model to use (default: openai/gpt-4.1-mini)
             embedding: Embedding model to use (default: openai/text-embedding-3-small)
         """
         self.subject_id = subject_id
