@@ -17,6 +17,8 @@ class Memory:
         api_key: Optional[str] = None,
         subject_id: Optional[str] = None,
         base_url: Optional[str] = None,
+        model: str = "openai/gpt-4.1-mini",  # ✅ Added
+        embedding: str = "openai/text-embedding-3-small",  # ✅ Added
     ):
         """
         Initialize the Memory SDK
@@ -25,6 +27,8 @@ class Memory:
             api_key: Letta API key (defaults to LETTA_API_KEY env var). Required for Letta Cloud.
             subject_id: Optional default subject for instance-scoped operations
             base_url: Letta server URL (defaults to Letta Cloud). For self-hosted: "http://localhost:<port>" or server URL
+            model: LLM model to use (default: openai/gpt-4.1-mini)
+            embedding: Embedding model to use (default: openai/text-embedding-3-small)
         """
         if api_key is None:
             api_key = os.getenv("LETTA_API_KEY")
@@ -49,17 +53,25 @@ class Memory:
         # Optional default subject for instance-scoped operations
         self.subject_id = subject_id
         self._default_tag = "ai-memory-sdk"
+        
+        # Store model configuration
+        self.model = model  # ✅ Added
+        self.embedding = embedding  # ✅ Added
 
-    def _create_sleeptime_agent(self, name: str, tags: List[str]): 
+    def _create_sleeptime_agent(self, name: str, tags: List[str], memory_blocks: Optional[List[Dict[str, Any]]] = None): 
         """ Create a subconscious agent that learns over time """ 
         # Ensure default SDK tag is present
         tags = list(dict.fromkeys((tags or []) + [self._default_tag]))
+        
+        # ✅ Updated to use configured model/embedding and support custom memory blocks
         agent_state = self.letta_client.agents.create(
             name=name,
-            model="openai/gpt-4.1",
+            model=self.model,
+            embedding=self.embedding,
             agent_type="sleeptime_agent",
             initial_message_sequence=[], 
-            tags=tags
+            tags=tags,
+            memory_blocks=memory_blocks  # ✅ Added support for custom blocks
         )
         return agent_state.id
 
@@ -114,7 +126,10 @@ class Memory:
         if agent:
             return agent.id
         # Create a new agent for this subject with both tags for compatibility
-        agent_id = self._create_sleeptime_agent(name=f"subconscious_agent_subject_{subject_id}", tags=self._subject_tags(subject_id))
+        agent_id = self._create_sleeptime_agent(
+            name=f"subconscious_agent_subject_{subject_id}", 
+            tags=self._subject_tags(subject_id)
+        )
         # Create initial passage in archival memory
         self.letta_client.agents.passages.create(
             agent_id=agent_id,
