@@ -131,7 +131,7 @@ class MemoryService:
             # Check if agent already exists using org + customer tags
             agent = self.memory.letta_client.agents.list(
                 tags=[f"org:{org_id}", f"customer:{customer_phone}"],
-                tags_match_all=True,
+                match_all_tags=True,
                 limit=1
             )
             
@@ -150,7 +150,7 @@ class MemoryService:
             
             # Create sleeptime agent with tags
             agent_id = self.memory.letta_client.agents.create(
-                name=f"Memory Agent - {org_id}:{customer_phone}",
+                name=f"MemoryAgent{org_id}{customer_phone}",
                 model=self.model,
                 embedding=self.embedding,
                 agent_type="sleeptime_agent",
@@ -216,7 +216,7 @@ class MemoryService:
             # Check if agent exists
             agent = self.memory.letta_client.agents.list(
                 tags=[f"org:{org_id}", f"customer:{customer_phone}"],
-                tags_match_all=True,
+                match_all_tags=True,
                 limit=1
             )
             
@@ -544,7 +544,7 @@ class MemoryService:
             
             agents = self.memory.letta_client.agents.list(
                 tags=tags,
-                tags_match_all=False,  # Match agents with org tag
+                match_all_tags=False,  # Match agents with org tag
                 limit=limit
             )
             

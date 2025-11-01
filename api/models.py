@@ -84,8 +84,6 @@ class InitializeWithBlocksResponse(BaseResponse):
 # ==================== Add Conversation Models ====================
 
 class AddConversationRequest(BaseModel):
-    org_id: str = Field(..., description="Organization identifier")
-    customer_phone: str = Field(..., description="Customer phone number")
     messages: List[Dict[str, str]] = Field(
         ..., 
         description="List of message objects with 'role' and 'content'"
